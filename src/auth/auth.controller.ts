@@ -53,8 +53,6 @@ export class AuthController {
       throw new BadRequestException('Google ID Token is required');
     }
 
-    const authResponse =
-      await this.authService.delegatedGoogleAuth(googleIdToken);
-    return authResponse;
+    return await this.authService.delegatedGoogleAuth(googleIdToken);
   }
 }

@@ -1,5 +1,4 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Wallet } from './wallet.entity';
 
 @Entity()
 export class Token {
@@ -9,9 +8,11 @@ export class Token {
   @Column()
   symbol: string;
 
-  @Column('decimal', { precision: 18, scale: 8 })
-  balance: number; // The balance of the specific token in the wallet
+  @Column()
+  name: string;
 
-  @ManyToOne(() => Wallet, (wallet) => wallet.tokenBalances)
-  wallet: Wallet; // A wallet can have multiple token balances
+  @Column({ unique: true, nullable: true })
+  contractAddress: string; // for ERC-20 tokens, etc.
+
+  // Any other attributes relevant to the token
 }

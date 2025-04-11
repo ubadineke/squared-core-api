@@ -5,6 +5,7 @@ import {
   Column,
   OneToOne,
   JoinColumn,
+  BeforeInsert,
 } from 'typeorm';
 
 @Entity()
@@ -18,7 +19,14 @@ export class User {
   @Column()
   googleId: string;
 
-  @OneToOne(() => Wallet)
+  @OneToOne(() => Wallet, { cascade: true, nullable: false })
   @JoinColumn()
   wallet: Wallet;
+
+  // @BeforeInsert()
+  // createWallet() {
+  //   if (!this.wallet) {
+  //     this.wallet = new Wallet();
+  //   }
+  // }
 }

@@ -20,7 +20,6 @@ export class GoogleService {
           error: error?.message || 'Token verification failed',
         });
       });
-    console.log('passed');
     return ticket.getPayload();
   }
 }

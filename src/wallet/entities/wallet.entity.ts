@@ -1,12 +1,20 @@
 import { User } from 'src/users/entities/user.entity';
-import { Column, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  OneToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Entity,
+} from 'typeorm';
 import { Token } from './token.entity';
+import { TokenBalance } from './token.balance.entity';
 
+@Entity()
 export class Wallet {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User)
+  @OneToOne(() => User, (user) => user.wallet, { eager: true }) // One wallet belongs to one user
   user: User;
 
   @Column({ default: 0 })
@@ -15,6 +23,6 @@ export class Wallet {
   @Column({ default: () => 'CURRENT_TIMESTAMP' })
   lastUpdated: Date; // Keep track of the last time the wallet was updated.
 
-  @OneToMany(() => Token, (token) => token.wallet)
+  @OneToMany(() => TokenBalance, (tokenBalance) => tokenBalance.wallet)
   tokenBalances: Token[];
 }
